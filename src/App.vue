@@ -15,6 +15,9 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-primary btn-lg btn-block" @click="add">添加</button>
                     </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" v-model="keywords" placeholder="搜索">
+                    </div>
                 </form>
             </div>
         </div>
@@ -28,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item, index) in items" :key="item.id">
+            <tr v-for="(item, index) in search" :key="item.id">
                 <th v-text="item.id" scope="row">1</th>
                 <td v-text="item.name"></td>
                 <td v-text="item.createTime"></td>
@@ -51,6 +54,7 @@
             return {
                 id: '',
                 name: '',
+                keywords:'',
                 items: items
             };
         },
@@ -63,6 +67,13 @@
             del(index, id) {
                 window.console.log(id);
                 this.items.splice(index, 1);
+            }
+        },
+        computed:{
+            search(){
+                return this.items.filter(item=>{
+                    return item.name.includes(this.keywords);
+                });
             }
         }
     }
