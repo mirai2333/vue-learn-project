@@ -1,9 +1,11 @@
 <template>
     <div id="app">
         <!--头部-->
-        <mt-header fixed title="固定在顶部"></mt-header>
+        <mt-header fixed title="黑马程序员-成就IT黑马！"></mt-header>
         <!--身体-->
-        <router-view/>
+        <transition>
+            <router-view/>
+        </transition>
         <!--腿部-->
         <mt-tabbar v-model="selected">
             <mt-tab-item id="1">
@@ -32,8 +34,8 @@
                 selected: 1
             };
         },
-        watch:{
-            selected(newValue){
+        watch: {
+            selected(newValue) {
                 this.routerChange(newValue);
             }
         },
@@ -45,7 +47,7 @@
                         temPath = 'home';
                         break;
                     case '2':
-                        temPath = 'user';
+                        temPath = 'member';
                         break;
                     case '3':
                         temPath = 'cart';
@@ -66,5 +68,21 @@
 <style>
     #app {
         padding-top: 40px;
+        overflow-x: hidden;
+    }
+
+    .v-enter {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    .v-leave-to {
+        opacity: 0;
+        transform: translateX(-100%);
+        position: absolute;
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        transition: all 0.5s ease;
     }
 </style>
