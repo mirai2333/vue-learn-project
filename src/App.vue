@@ -1,91 +1,70 @@
 <template>
-    <div id="app" class="container-fluid">
-        <div class="card bg-light mb-3">
-            <div class="card-header">添加品牌</div>
-            <div class="card-body">
-                <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <input type="number" class="form-control" v-model="id" placeholder="品牌ID">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <input type="text" class="form-control" v-model="name" placeholder="品牌名称">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-lg btn-block" @click="add">添加</button>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" v-model="keywords" placeholder="搜索">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">NAME</th>
-                <th scope="col">CTIME</th>
-                <th scope="col">OPERATION</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(item, index) in search" :key="item.id">
-                <th v-text="item.id" scope="row">1</th>
-                <td v-text="item.name"></td>
-                <td v-text="item.createTime"></td>
-                <td><a href="#" @click.prevent="del(index,item.id)">删除</a></td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="app">
+        <!--头部-->
+        <mt-header fixed title="固定在顶部"></mt-header>
+        <!--身体-->
+        <router-view/>
+        <!--腿部-->
+        <mt-tabbar v-model="selected">
+            <mt-tab-item id="1">
+                <img slot="icon" src="./assets/logo.png" alt="首页">首页
+            </mt-tab-item>
+            <mt-tab-item id="2">
+                <img slot="icon" src="./assets/logo.png" alt="会员">会员
+            </mt-tab-item>
+            <mt-tab-item id="3">
+                <img slot="icon" src="./assets/logo.png" alt="购物车">购物车
+            </mt-tab-item>
+            <mt-tab-item id="4">
+                <img slot="icon" src="./assets/logo.png" alt="搜索">搜索
+            </mt-tab-item>
+        </mt-tabbar>
+
+
     </div>
 </template>
 
 <script>
-    const items = [
-        {id: 1, name: '红旗', createTime: new Date().toLocaleString()},
-        {id: 2, name: '奔驰', createTime: new Date().toLocaleString()},
-        {id: 3, name: '宝马', createTime: new Date().toLocaleString()}
-    ];
     export default {
         name: 'app',
         data() {
             return {
-                id: '',
-                name: '',
-                keywords:'',
-                items: items
+                selected: 1
             };
         },
-        methods: {
-            add() {
-                let item = {id: this.id, name: this.name, createTime: new Date().toLocaleString()};
-                this.items.push(item);
-                this.id = this.name = '';
-            },
-            del(index, id) {
-                window.console.log(id);
-                this.items.splice(index, 1);
+        watch:{
+            selected(newValue){
+                this.routerChange(newValue);
             }
         },
-        computed:{
-            search(){
-                return this.items.filter(item=>{
-                    return item.name.includes(this.keywords);
-                });
+        methods: {
+            routerChange(selected) {
+                let temPath;
+                switch (selected) {
+                    case '1':
+                        temPath = 'home';
+                        break;
+                    case '2':
+                        temPath = 'user';
+                        break;
+                    case '3':
+                        temPath = 'cart';
+                        break;
+                    case '4':
+                        temPath = 'search';
+                        break;
+                    default:
+                        temPath = 'home';
+                }
+                this.$router.push({name: temPath, params: {my_data: selected}});
             }
-        }
+        },
+        computed: {}
     }
 </script>
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin: 0;
+        padding-top: 40px;
     }
 </style>
