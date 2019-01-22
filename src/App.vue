@@ -7,7 +7,7 @@
             <router-view/>
         </transition>
         <!--腿部-->
-        <mt-tabbar v-model="selected">
+        <mt-tabbar v-model="selected" :fixed="true">
             <mt-tab-item id="1">
                 <img slot="icon" src="./assets/logo.png" alt="首页">首页
             </mt-tab-item>
