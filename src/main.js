@@ -6,6 +6,7 @@ Vue.use(Resource);
 import router from './router'
 
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import './lib/mui/css/mui.css'
 import './lib/mui/css/icons-extra.css'
 import './lib/mui/fonts/mui-icons-extra.ttf'
@@ -27,6 +28,8 @@ Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 import { Button } from 'mint-ui';
 Vue.component(Button.name, Button);
+import { Field } from 'mint-ui';
+Vue.component(Field.name, Field);
 
 
 Vue.config.productionTip = false;
